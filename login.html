@@ -45,11 +45,10 @@
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
 <script>
-  /* from "สมัครหลักสูตรนี้" -> start the application (first time: profile step 1);
-     from "ติดตามใบสมัคร" or the header -> my application */
-  const applying = qs("next") === "apply";
-  const dest = applying ? "profile-1.html" : "status.html";
-  if(applying) document.getElementById("lead").textContent =
+  /* Same as the Figma prototype (screen 04): every sign-in button goes to
+     screen 05 "ข้อมูลส่วนตัว", the first time the applicant fills in the profile. */
+  const dest = "profile-1.html";
+  document.getElementById("lead").textContent =
     "เข้าสู่ระบบเพื่อสมัคร " + chosenProgram().code + " · ครั้งแรกจะให้กรอกข้อมูลผู้สมัครก่อน";
   document.getElementById("form").addEventListener("submit", e => { e.preventDefault(); location.href = dest; });
   document.querySelectorAll("[data-go]").forEach(a => a.href = dest);
