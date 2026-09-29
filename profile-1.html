@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข้อมูลส่วนตัว | สมัครเรียน มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-auth="1" data-nav="programs.html" data-step="0">
+<div id="header"></div>
+
+<main id="main">
+  <div class="narrow page stack">
+    <div>
+      <h1 class="page-title">สมัครเรียน</h1>
+      <div class="apply-for" id="applyFor"></div>
+      <ol class="stepper" id="stepper"></ol>
+    </div>
+
+    <div class="callout info">
+      <span class="ic">i</span>
+      <div><b>กรอกข้อมูลผู้สมัครครั้งแรกครั้งเดียว</b>ครั้งถัดไปที่สมัครหลักสูตรอื่น ระบบจะข้ามไปขั้น "รอบและเอกสาร" ให้เลย</div>
+    </div>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">ข้อมูลส่วนตัว</h2>
+        <p class="hint">ใช้ข้อมูลตามบัตรประชาชน · ช่องที่มี * ต้องกรอก</p>
+      </div>
+      <div class="avatar-pick">
+        <span class="ph" aria-hidden="true"></span>
+        <div>
+          <label class="btn btn-outline btn-sm">เปลี่ยนรูป<input type="file" accept="image/*" hidden></label>
+          <p class="hint small" style="margin-top:6px;">รูปหน้าตรง พื้นหลังสีเรียบ ไม่เกิน 10 MB</p>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field full"><label for="a">เลขบัตรประชาชน <span class="req">*</span></label><input id="a" value="1 2599 00123 45 6" inputmode="numeric"></div>
+        <div class="field"><label for="b">คำนำหน้า <span class="req">*</span></label><select id="b"><option>นาย</option><option>นางสาว</option><option>นาง</option></select></div>
+        <div class="field"><label for="c">วันเกิด <span class="req">*</span></label><input id="c" value="05/05/2551"></div>
+        <div class="field"><label for="d">ชื่อ <span class="req">*</span></label><input id="d" value="สมชาย"></div>
+        <div class="field"><label for="e">นามสกุล <span class="req">*</span></label><input id="e" value="ใจดี"></div>
+        <div class="field"><label for="f">ชื่อ (ภาษาอังกฤษ) <span class="req">*</span></label><input id="f" value="Somchai"></div>
+        <div class="field"><label for="g">นามสกุล (ภาษาอังกฤษ) <span class="req">*</span></label><input id="g" value="Jaidee"></div>
+        <div class="field"><label for="h">เพศ <span class="opt">(ไม่บังคับ)</span></label><select id="h"><option>ชาย</option><option>หญิง</option><option>ไม่ระบุ</option></select></div>
+        <div class="field"><label for="i">ความต้องการพิเศษ <span class="opt">(ไม่บังคับ)</span></label><select id="i"><option>ไม่มี</option><option>มี</option></select></div>
+      </div>
+    </section>
+  </div>
+
+  <div class="form-bar">
+    <div class="narrow">
+      <a class="btn btn-outline" href="major.html">← กลับไปหน้าหลักสูตร</a>
+      <span class="spacer"></span>
+      <a class="btn btn-primary btn-lg" href="profile-2.html">ถัดไป: ช่องทางติดต่อ →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+</body>
+</html>

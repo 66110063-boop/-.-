@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ช่องทางติดต่อ | สมัครเรียน มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-auth="1" data-nav="programs.html" data-step="1">
+<div id="header"></div>
+
+<main id="main">
+  <div class="narrow page stack">
+    <div>
+      <h1 class="page-title">สมัครเรียน</h1>
+      <div class="apply-for" id="applyFor"></div>
+      <ol class="stepper" id="stepper"></ol>
+    </div>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">ช่องทางการติดต่อ</h2>
+        <p class="hint">เราจะแจ้งผลการสมัครทางอีเมลและเบอร์โทรนี้</p>
+      </div>
+      <div class="fields">
+        <div class="field"><label for="a">อีเมล <span class="req">*</span></label><input id="a" type="email" value="somchai@example.com"></div>
+        <div class="field"><label for="b">เบอร์มือถือ <span class="req">*</span></label><input id="b" type="tel" value="081-234-5678"></div>
+        <div class="field full"><label for="c">ที่อยู่ปัจจุบัน <span class="req">*</span></label><textarea id="c">99 หมู่ 1 ถนนสุวรรณศร</textarea></div>
+        <div class="field"><label for="d">จังหวัด <span class="req">*</span></label><input id="d" value="ปราจีนบุรี"></div>
+        <div class="field"><label for="e">รหัสไปรษณีย์ <span class="req">*</span></label><input id="e" value="25000" inputmode="numeric"></div>
+      </div>
+    </section>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">ผู้ปกครองที่ติดต่อได้</h2>
+        <p class="hint">บุคคลที่เราติดต่อได้ในกรณีจำเป็น</p>
+      </div>
+      <div class="field">
+        <span class="label">ความสัมพันธ์ <span class="req">*</span></span>
+        <div class="radios">
+          <label class="radio"><input type="radio" name="rel"> บิดา</label>
+          <label class="radio"><input type="radio" name="rel" checked> มารดา</label>
+          <label class="radio"><input type="radio" name="rel"> อื่น ๆ</label>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field"><label for="f">ชื่อ-นามสกุล <span class="req">*</span></label><input id="f" value="นางสมศรี ใจดี"></div>
+        <div class="field"><label for="g">เบอร์มือถือ <span class="req">*</span></label><input id="g" type="tel" value="089-876-5432"></div>
+      </div>
+      <label class="check"><input type="checkbox" checked> ที่อยู่เดียวกับผู้สมัคร</label>
+    </section>
+
+    <details class="more">
+      <summary>ข้อมูลบิดา-มารดาเพิ่มเติม <span class="opt">(ไม่บังคับ)</span></summary>
+      <div class="fields">
+        <div class="field"><label for="h">ชื่อ-นามสกุล บิดา</label><input id="h"></div>
+        <div class="field"><label for="i">เบอร์โทร บิดา</label><input id="i" type="tel"></div>
+        <div class="field"><label for="j">ชื่อ-นามสกุล มารดา</label><input id="j"></div>
+        <div class="field"><label for="k">เบอร์โทร มารดา</label><input id="k" type="tel"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="form-bar">
+    <div class="narrow">
+      <a class="btn btn-outline" href="profile-1.html">← ย้อนกลับ</a>
+      <span class="saved">บันทึกอัตโนมัติแล้ว</span>
+      <span class="spacer"></span>
+      <a class="btn btn-primary btn-lg" href="profile-3.html">ถัดไป: การศึกษา →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รายละเอียดหลักสูตร | รับสมัครนักศึกษา มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-nav="programs.html">
+<div id="header"></div>
+
+<main id="main">
+  <section class="major-hero">
+    <img src="assets/photos/building2.jpg" alt="">
+    <div class="inner">
+      <nav class="crumbs" aria-label="เส้นทาง"><a href="programs.html">หลักสูตร</a> › <span id="crumb"></span></nav>
+      <div class="code" id="code"></div>
+      <div class="en" id="en"></div>
+      <div class="th" id="th"></div>
+    </div>
+  </section>
+
+  <div class="container page">
+    <div class="two-col">
+      <div class="stack">
+        <section class="card">
+          <h2 class="card-title">เรียนอะไรบ้าง</h2>
+          <p id="desc"></p>
+          <ul class="checklist" id="topics"></ul>
+        </section>
+        <section class="card">
+          <h2 class="card-title">จบแล้วทำงานอะไรได้</h2>
+          <ul class="bullets" id="careers"></ul>
+        </section>
+        <section class="card" id="criteria">
+          <h2 class="card-title">คุณสมบัติและเอกสารที่ต้องเตรียม</h2>
+          <div class="cols-2">
+            <div>
+              <h3 style="font-size:15px;">วุฒิที่ใช้สมัครได้</h3>
+              <ul class="bullets" id="quals"></ul>
+            </div>
+            <div>
+              <h3 style="font-size:15px;">ไฟล์ที่ต้องแนบ</h3>
+              <ul class="checklist">
+                <li>Portfolio (PDF)</li>
+                <li>ระเบียนแสดงผลการเรียน</li>
+                <li>รูปถ่าย 1-1.5 นิ้ว</li>
+                <li>สำเนาบัตรประชาชน</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <aside class="aside">
+        <div class="fee-box">
+          <div class="lbl">ค่าธรรมเนียมการศึกษา</div>
+          <div class="amt"><span id="fee"></span> บาท</div>
+          <div class="per">ต่อภาคการศึกษา · <span id="degree"></span></div>
+        </div>
+        <div class="card">
+          <h2 class="card-title">สนใจหลักสูตรนี้?</h2>
+          <p class="hint">เปิดรับรอบ 1 Portfolio ถึง 30 พ.ย. 2569</p>
+          <a class="btn btn-primary btn-lg btn-block" href="login.html?next=apply">สมัครหลักสูตรนี้</a>
+          <a class="btn btn-ghost btn-block" href="#criteria" style="margin-top:6px;">ดูเอกสารที่ต้องเตรียม</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+<script>
+  const p = chosenProgram();
+  document.title = p.code + " " + p.fullTitle + " | รับสมัครนักศึกษา มจพ. ปราจีนบุรี";
+  document.getElementById("crumb").textContent = p.code;
+  document.getElementById("code").textContent = p.code;
+  document.getElementById("en").textContent = p.nameEn;
+  document.getElementById("th").textContent = p.nameTh;
+  document.getElementById("desc").textContent = p.desc;
+  document.getElementById("topics").innerHTML = p.topics.map(t => `<li>${esc(t)}</li>`).join("");
+  document.getElementById("careers").innerHTML = p.careers.map(t => `<li>${esc(t)}</li>`).join("");
+  document.getElementById("fee").textContent = p.tuition;
+  document.getElementById("degree").textContent = p.degreeType;
+  /* 4-5 year bachelor: ม.6 / ปวช.; continuing & transfer programs: ปวส. (from the descriptions in data.js) */
+  const quals = p.degreeGroup === "bachelor"
+    ? QUALIFICATIONS.filter(q => q.indexOf("ปวส.") === -1)
+    : QUALIFICATIONS.filter(q => q.indexOf("ปวส.") !== -1);
+  document.getElementById("quals").innerHTML = quals.map(q => `<li>${esc(q)}</li>`).join("");
+</script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ข้อมูลการศึกษา | สมัครเรียน มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-auth="1" data-nav="programs.html" data-step="2">
+<div id="header"></div>
+
+<main id="main">
+  <div class="narrow page stack">
+    <div>
+      <h1 class="page-title">สมัครเรียน</h1>
+      <div class="apply-for" id="applyFor"></div>
+      <ol class="stepper" id="stepper"></ol>
+    </div>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">ข้อมูลการศึกษา</h2>
+        <p class="hint">วุฒิล่าสุดที่ใช้สมัคร</p>
+      </div>
+      <div class="field">
+        <span class="label">สถานะ <span class="req">*</span></span>
+        <div class="radios">
+          <label class="radio"><input type="radio" name="st" checked> กำลังศึกษาอยู่</label>
+          <label class="radio"><input type="radio" name="st"> จบการศึกษาแล้ว</label>
+        </div>
+      </div>
+      <div class="fields">
+        <div class="field"><label for="a">ระดับการศึกษา <span class="req">*</span></label><select id="a"><option>มัธยมศึกษาปีที่ 6 (สายวิทย์-คณิต)</option><option>มัธยมศึกษาปีที่ 6 (สายศิลป์)</option><option>ประกาศนียบัตรวิชาชีพ (ปวช.)</option><option>ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</option></select></div>
+        <div class="field"><label for="b">แผนการเรียน / สาขา <span class="req">*</span></label><input id="b" value="วิทย์-คณิต"></div>
+        <div class="field full"><label for="c">ชื่อสถานศึกษา <span class="req">*</span></label><input id="c" value="โรงเรียนปราจีนกัลยาณี"></div>
+        <div class="field"><label for="d">เกรดเฉลี่ยสะสม (GPAX) <span class="req">*</span></label><input id="d" value="3.45" inputmode="decimal"><p class="help">ถ้ายังเรียนอยู่ ใช้เกรดเฉลี่ยถึงภาคเรียนล่าสุด</p></div>
+        <div class="field"><label for="e">ปีที่จบ / คาดว่าจะจบ</label><select id="e"><option>2569</option><option>2570</option></select></div>
+      </div>
+    </section>
+
+    <details class="more">
+      <summary>คะแนนสอบภาษาอังกฤษ <span class="opt">(ถ้ามี)</span></summary>
+      <div class="fields">
+        <div class="field"><label for="f">ประเภทการสอบ</label><select id="f"><option>ไม่มี</option><option>TOEIC</option><option>IELTS</option><option>TOEFL</option></select></div>
+        <div class="field"><label for="g">คะแนน</label><input id="g"></div>
+      </div>
+    </details>
+    <details class="more">
+      <summary>ความสามารถพิเศษ / ผลงาน <span class="opt">(ถ้ามี)</span></summary>
+      <div class="field"><label for="h">รายละเอียด</label><textarea id="h" placeholder="เช่น รางวัลการแข่งขันหุ่นยนต์ระดับจังหวัด"></textarea></div>
+    </details>
+  </div>
+
+  <div class="form-bar">
+    <div class="narrow">
+      <a class="btn btn-outline" href="profile-2.html">← ย้อนกลับ</a>
+      <span class="saved">บันทึกอัตโนมัติแล้ว</span>
+      <span class="spacer"></span>
+      <a class="btn btn-primary btn-lg" href="apply.html">ถัดไป: รอบและเอกสาร →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+</body>
+</html>

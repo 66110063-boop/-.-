@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รอบและเอกสาร | สมัครเรียน มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-auth="1" data-nav="programs.html" data-step="3">
+<div id="header"></div>
+
+<main id="main">
+  <div class="narrow page stack">
+    <div>
+      <h1 class="page-title">สมัครเรียน</h1>
+      <div class="apply-for" id="applyFor"></div>
+      <ol class="stepper" id="stepper"></ol>
+    </div>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">เลือกรอบการรับสมัคร</h2>
+        <p class="hint">แสดงเฉพาะรอบที่สมัครตรงกับมหาวิทยาลัย</p>
+      </div>
+      <div class="radios">
+        <label class="radio wide"><input type="radio" name="round" checked><span class="lbl">รอบ 1 Portfolio</span><span class="badge b-green">เปิดรับถึง 30 พ.ย. 2569</span></label>
+        <label class="radio wide disabled"><input type="radio" name="round" disabled><span class="lbl">รอบ 2 โควตา</span><span class="badge b-gray">เปิด 1 ก.พ. 2570</span></label>
+      </div>
+      <div class="callout info"><span class="ic">i</span><div>รอบ 3 Admission สมัครผ่านระบบกลาง <a href="https://student.mytcas.com" target="_blank" rel="noopener">mytcas.com</a> ไม่ได้สมัครในระบบนี้</div></div>
+    </section>
+
+    <section class="card">
+      <div>
+        <h2 class="card-title">แนบเอกสาร</h2>
+        <p class="hint">PDF หรือรูปภาพ ไม่เกิน 10 MB ต่อไฟล์ · คลิกหรือลากไฟล์มาวาง</p>
+      </div>
+      <div class="field">
+        <span class="label">แฟ้มสะสมผลงาน (Portfolio) <span class="req">*</span></span>
+        <label class="upload has"><span class="fi">✓</span><span><span class="t">portfolio-somchai.pdf</span><span class="s">แนบแล้ว · คลิกเพื่อเปลี่ยนไฟล์</span></span><input type="file" accept=".pdf"></label>
+      </div>
+      <div class="field">
+        <span class="label">ระเบียนแสดงผลการเรียน <span class="req">*</span></span>
+        <label class="upload has"><span class="fi">✓</span><span><span class="t">transcript.pdf</span><span class="s">แนบแล้ว · คลิกเพื่อเปลี่ยนไฟล์</span></span><input type="file" accept=".pdf,image/*"></label>
+      </div>
+      <div class="field">
+        <span class="label">รูปถ่าย 1-1.5 นิ้ว <span class="req">*</span></span>
+        <label class="upload has"><span class="fi">✓</span><span><span class="t">photo.jpg</span><span class="s">แนบแล้ว · คลิกเพื่อเปลี่ยนไฟล์</span></span><input type="file" accept="image/*"></label>
+      </div>
+      <div class="field">
+        <span class="label">สำเนาบัตรประชาชน <span class="req">*</span></span>
+        <label class="upload has"><span class="fi">✓</span><span><span class="t">idcard.pdf</span><span class="s">แนบแล้ว · คลิกเพื่อเปลี่ยนไฟล์</span></span><input type="file" accept=".pdf,image/*"></label>
+      </div>
+      <div class="field">
+        <span class="label">สำเนาใบเปลี่ยนชื่อ-สกุล <span class="opt">(ถ้ามี)</span></span>
+        <label class="upload"><span class="fi">↑</span><span><span class="t">แนบไฟล์</span><span class="s">คลิกหรือลากไฟล์มาวาง · ไม่เกิน 10 MB</span></span><input type="file" accept=".pdf,image/*"></label>
+      </div>
+    </section>
+  </div>
+
+  <div class="form-bar">
+    <div class="narrow">
+      <a class="btn btn-outline" href="profile-3.html">← ย้อนกลับ</a>
+      <span class="saved">แนบเอกสารครบ 4/4</span>
+      <span class="spacer"></span>
+      <a class="btn btn-primary btn-lg" href="review.html">ถัดไป: ตรวจสอบ →</a>
+    </div>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+</body>
+</html>

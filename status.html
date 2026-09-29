@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ใบสมัครของฉัน | รับสมัครนักศึกษา มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-auth="1" data-nav="status.html">
+<div id="header"></div>
+
+<main id="main" class="narrow page stack">
+  <div class="head-row" style="margin:0;align-items:flex-end;">
+    <div>
+      <h1 class="page-title">ใบสมัครของฉัน</h1>
+      <p class="muted">นายสมชาย ใจดี · somchai@example.com</p>
+    </div>
+    <a class="btn btn-outline" href="programs.html">สมัครหลักสูตรอื่นเพิ่ม</a>
+  </div>
+
+  <!-- like the Figma prototype, clicking the card flips between the two sample states (screens 12 and 13) -->
+  <a class="app-card" id="appCard" href="#" title="ดูตัวอย่างสถานะถัดไป">
+    <span class="code" id="code"></span>
+    <div>
+      <h2 id="progName"></h2>
+      <p class="meta">รอบ 1 Portfolio · เลขที่ใบสมัคร 2570-TM-00123 · สมัครเมื่อ 28 พ.ย. 2569</p>
+      <span class="badge" id="badge"></span>
+    </div>
+  </a>
+
+  <div id="action"></div>
+
+  <section class="card">
+    <h2 class="card-title">ขั้นตอนการคัดเลือก</h2>
+    <ol class="timeline" id="timeline"></ol>
+  </section>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+<script>
+  const p = chosenProgram();
+  document.getElementById("code").textContent = p.code;
+  document.getElementById("progName").textContent = p.nameTh;
+
+  const STEPS = [
+    ["ส่งใบสมัคร", "28 พ.ย. 2569"],
+    ["ชำระค่าสมัคร", "ภายใน 2 ธ.ค. 2569"],
+    ["ตรวจสอบคุณสมบัติ", "ประมาณ 3-5 วันทำการ"],
+    ["สอบสัมภาษณ์", "ตามประกาศรายชื่อผู้มีสิทธิ์สอบ"],
+    ["ประกาศผลการคัดเลือก", "ตามกำหนดการรับสมัคร"],
+    ["ยืนยันสิทธิ์ที่ mytcas.com", "ภายในวันที่ระบบกลางกำหนด"],
+    ["รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่", "ชำระค่าธรรมเนียมแรกเข้า"]
+  ];
+
+  const STATES = {
+    review: {
+      at: 2, label: "กำลังตรวจสอบคุณสมบัติ", badge: "b-blue",
+      action: `<div class="callout info"><span class="ic">i</span>
+        <div><b>ได้รับค่าสมัครแล้ว</b>ทางคณะกำลังตรวจสอบคุณสมบัติและเอกสาร ยังไม่ต้องทำอะไรเพิ่ม เราจะแจ้งทางอีเมลเมื่อมีความคืบหน้า</div></div>`
+    },
+    passed: {
+      at: 5, label: "ผ่านการคัดเลือก", badge: "b-green",
+      action: `<section class="card passed">
+        <h2 class="card-title">ยินดีด้วย คุณผ่านการคัดเลือก</h2>
+        <p class="hint">ขั้นตอนต่อไปมี 2 อย่าง ทำตามลำดับ:</p>
+        <ol class="next-steps">
+          <li><b>ยืนยันสิทธิ์ที่ระบบกลาง mytcas.com</b><span>ถ้าไม่ยืนยันภายในกำหนด จะถือว่าสละสิทธิ์</span></li>
+          <li><b>รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่</b><span>เปิดให้ทำหลังยืนยันสิทธิ์แล้ว</span></li>
+        </ol>
+        <a class="btn btn-green btn-lg" href="https://student.mytcas.com" target="_blank" rel="noopener">ไปยืนยันสิทธิ์ที่ mytcas.com</a>
+      </section>`
+    }
+  };
+
+  let state = qs("s") === "passed" ? "passed" : "review";
+  function render(){
+    const s = STATES[state];
+    const badge = document.getElementById("badge");
+    badge.className = "badge " + s.badge;
+    badge.textContent = s.label;
+    document.getElementById("action").innerHTML = s.action;
+    document.getElementById("timeline").innerHTML = STEPS.map(([name, when], i) => {
+      const cls = i < s.at ? "done" : i === s.at ? "active" : "pending";
+      return `<li class="${cls}"><span class="tdot">${i < s.at ? "✓" : i + 1}</span>
+        <div class="tbox"><div class="tname">${name}</div><div class="tdate">${i < s.at ? "เรียบร้อย" : when}</div></div></li>`;
+    }).join("");
+    history.replaceState(null, "", "status.html" + (state === "passed" ? "?s=passed" : ""));
+  }
+  document.getElementById("appCard").addEventListener("click", e => {
+    e.preventDefault();
+    state = state === "review" ? "passed" : "review";
+    render();
+  });
+  render();
+</script>
+</body>
+</html>

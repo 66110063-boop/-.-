@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>หลักสูตรที่เปิดรับ | รับสมัครนักศึกษา มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-nav="programs.html">
+<div id="header"></div>
+
+<main id="main" class="container page stack">
+  <div>
+    <h1 class="page-title">หลักสูตรที่เปิดรับสมัคร</h1>
+    <p class="muted">เลือกหลักสูตรเพื่อดูรายละเอียด แล้วกด "สมัครหลักสูตรนี้"</p>
+  </div>
+
+  <label class="search">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.39-1.42 1.42-5.39-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg>
+    <span class="sr-only">ค้นหาหลักสูตร</span>
+    <input type="search" id="q" placeholder="ค้นหาชื่อสาขา เช่น คอมพิวเตอร์, วิศวกรรม, IT">
+  </label>
+  <div class="chips" id="chips" role="group" aria-label="กรองตามระดับหลักสูตร"></div>
+  <p class="small muted" id="count" aria-live="polite"></p>
+  <div class="grid-programs" id="grid"></div>
+  <div class="empty card" id="empty" hidden>
+    <p>ไม่พบหลักสูตรที่ตรงกับคำค้นหา</p>
+    <button class="btn btn-outline btn-sm" type="button" id="reset" style="margin-top:12px;">ล้างการค้นหา</button>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+<script>
+  let filter = "all";
+  const q = document.getElementById("q");
+  const LABEL = { bachelor:"ปริญญาตรี (4-5 ปี)", continuing2:"ต่อเนื่อง 2 ปี", transfer25:"เทียบโอน 2 ปีครึ่ง", transfer3:"เทียบโอน 3 ปี" };
+
+  function render(){
+    const chips = [["all", "ทั้งหมด", PROGRAMS.length]]
+      .concat(DEGREE_GROUPS.map(g => [g.key, LABEL[g.key], PROGRAMS.filter(p => p.degreeGroup === g.key).length]));
+    document.getElementById("chips").innerHTML = chips.map(([k, label, n]) =>
+      `<button class="chip" type="button" data-k="${k}" aria-pressed="${filter === k}">${label}<span class="n">${n}</span></button>`).join("");
+    document.querySelectorAll(".chip").forEach(c => c.addEventListener("click", () => { filter = c.dataset.k; render(); }));
+
+    const term = q.value.trim().toLowerCase();
+    const shown = orderedPrograms().filter(p =>
+      (filter === "all" || p.degreeGroup === filter) &&
+      (!term || [p.code, p.nameTh, p.nameEn].join(" ").toLowerCase().includes(term)));
+    document.getElementById("grid").innerHTML = shown.map(programCard).join("");
+    document.getElementById("empty").hidden = shown.length > 0;
+    document.getElementById("count").textContent = "พบ " + shown.length + " หลักสูตร";
+  }
+  q.addEventListener("input", render);
+  document.getElementById("reset").addEventListener("click", () => { q.value = ""; filter = "all"; render(); });
+  render();
+</script>
+</body>
+</html>

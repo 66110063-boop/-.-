@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>รับสมัครนักศึกษา | คณะเทคโนโลยีและการจัดการอุตสาหกรรม มจพ. ปราจีนบุรี</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body data-nav="index.html">
+<div id="header"></div>
+
+<main id="main">
+  <section class="hero">
+    <img src="assets/photos/building2.jpg" alt="">
+    <div class="hero-inner">
+      <div class="eyebrow">รับสมัครนักศึกษาใหม่ ปีการศึกษา 2570</div>
+      <h1>คณะเทคโนโลยีและการจัดการอุตสาหกรรม</h1>
+      <p>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ วิทยาเขตปราจีนบุรี · เปิดรับ 12 หลักสูตร ทั้งปริญญาตรี ต่อเนื่อง และเทียบโอน</p>
+      <div class="row">
+        <a class="btn btn-primary btn-lg" href="programs.html">เลือกหลักสูตรที่จะสมัคร</a>
+        <a class="btn btn-ondark btn-lg" href="login.html">ติดตามใบสมัคร</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="container page">
+    <section class="home-sec">
+      <h2 class="section-title">ขั้นตอนการสมัคร</h2>
+      <p class="sub">ดูหลักสูตรได้เลยโดยไม่ต้องเข้าสู่ระบบ เข้าสู่ระบบเฉพาะตอนกดสมัคร</p>
+      <div class="steps">
+        <div class="step"><div class="num">1</div><h3>เลือกหลักสูตร</h3><p>ดูรายละเอียด ค่าเทอม และเอกสารที่ต้องใช้</p></div>
+        <div class="step"><div class="num">2</div><h3>กรอกใบสมัคร</h3><p>เข้าสู่ระบบ กรอกข้อมูล เลือกรอบ และแนบเอกสาร</p></div>
+        <div class="step"><div class="num">3</div><h3>ชำระค่าสมัคร</h3><p>สแกน QR พร้อมเพย์ ใบสมัครสมบูรณ์เมื่อชำระแล้ว</p></div>
+        <div class="step"><div class="num">4</div><h3>ติดตามผล</h3><p>ดูสถานะ ประกาศผล และขั้นตอนหลังผ่านการคัดเลือก</p></div>
+      </div>
+    </section>
+
+    <section class="home-sec">
+      <h2 class="section-title">รอบที่เปิดรับสมัคร</h2>
+      <p class="sub small">วันที่เป็นตัวอย่างสำหรับม็อกอัพ</p>
+      <div class="rounds">
+        <div class="round now"><b>รอบ 1 Portfolio</b><span>เปิดรับถึง 30 พ.ย. 2569</span></div>
+        <div class="round"><b>รอบ 2 โควตา</b><span>1 ก.พ. – 15 มี.ค. 2570</span></div>
+        <div class="round"><b>รอบ 3 Admission</b><span>สมัครผ่านระบบกลาง mytcas</span></div>
+        <div class="round"><b>รอบ 4 รับตรงอิสระ</b><span>มิ.ย. 2570</span></div>
+      </div>
+    </section>
+
+    <section class="home-sec">
+      <div class="head-row">
+        <h2 class="section-title">หลักสูตรแนะนำ</h2>
+        <a class="btn btn-ghost" href="programs.html">ดูทั้งหมด 12 หลักสูตร →</a>
+      </div>
+      <div class="grid-programs" id="featured"></div>
+    </section>
+  </div>
+</main>
+
+<div id="footer"></div>
+<script src="js/data.js"></script>
+<script src="js/mock.js"></script>
+<script>
+  document.getElementById("featured").innerHTML =
+    ["INE","IT","CA","IEM"].map(c => programCard(PROGRAMS.find(p => p.code === c))).join("");
+</script>
+</body>
+</html>
