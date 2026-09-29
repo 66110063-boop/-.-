@@ -31,15 +31,19 @@ function esc(s){
 }
 function qs(name){ return new URLSearchParams(location.search).get(name); }
 
-/* The program picked on major.html is carried through the apply screens.
-   Falls back to INE, the program used throughout the Figma screens. */
+function programByCode(code){
+  return PROGRAMS.find(p => p.code === String(code || "").toUpperCase());
+}
+/* The program the visitor is applying to. It is remembered only once they press
+   "สมัครหลักสูตรนี้" (login.html?next=apply&code=...), so merely browsing a program
+   page does not change "ใบสมัครของฉัน". Falls back to INE, as in the Figma screens. */
 function chosenProgram(){
-  let code = qs("code");
+  let code = null;
   try{
-    if(code) localStorage.setItem("mock_code", code.toUpperCase());
-    else code = localStorage.getItem("mock_code");
+    if(qs("next") === "apply" && qs("code")) localStorage.setItem("mock_code", qs("code").toUpperCase());
+    code = localStorage.getItem("mock_code");
   }catch(e){}
-  return PROGRAMS.find(p => p.code === String(code || "").toUpperCase()) || PROGRAMS.find(p => p.code === "INE");
+  return programByCode(code) || programByCode("INE");
 }
 function cardName(p){ return CARD_NAME[p.code] || p.nameTh.replace("สาขาวิชา", "").replace(/ \((ต่อเนื่อง|เทียบโอน)\)$/, ""); }
 

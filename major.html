@@ -63,7 +63,7 @@
         <div class="card">
           <h2 class="card-title">สนใจหลักสูตรนี้?</h2>
           <p class="hint">เปิดรับรอบ 1 Portfolio ถึง 30 พ.ย. 2569</p>
-          <a class="btn btn-primary btn-lg btn-block" href="login.html?next=apply">สมัครหลักสูตรนี้</a>
+          <a class="btn btn-primary btn-lg btn-block" id="applyBtn" href="login.html?next=apply">สมัครหลักสูตรนี้</a>
           <a class="btn btn-ghost btn-block" href="#criteria" style="margin-top:6px;">ดูเอกสารที่ต้องเตรียม</a>
         </div>
       </aside>
@@ -75,7 +75,9 @@
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
 <script>
-  const p = chosenProgram();
+  /* this page only shows the program; applying (and remembering it) happens via the button */
+  const p = programByCode(qs("code")) || chosenProgram();
+  document.getElementById("applyBtn").href = "login.html?next=apply&code=" + p.code;
   document.title = p.code + " " + p.fullTitle + " | รับสมัครนักศึกษา มจพ. ปราจีนบุรี";
   document.getElementById("crumb").textContent = p.code;
   document.getElementById("code").textContent = p.code;
