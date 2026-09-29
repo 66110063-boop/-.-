@@ -297,6 +297,22 @@ details.more>div{ padding-bottom:18px; }
 .faq details.more{ background:#fff; }
 .faq details.more+details.more{ margin-top:10px; }
 
+/* ---------------- Live-demo additions ---------------- */
+.btn-logout{ background:rgba(255,255,255,.15); border:1px solid rgba(255,255,255,.35); color:#fff; border-radius:20px; padding:7px 14px; font-size:13px; font-weight:600; }
+.btn-logout:hover{ background:rgba(255,255,255,.25); }
+.linklike{ background:none; border:none; padding:0; color:#BDBDBD; text-decoration:underline; font-size:12px; }
+.invalid input,.invalid select,.invalid textarea{ border-color:var(--red-500) !important; background:#FFF8F7; }
+.check.invalid{ color:var(--red-500); }
+.toast{ position:fixed; left:50%; bottom:24px; transform:translate(-50%,20px); opacity:0; pointer-events:none; z-index:999; background:var(--ink); color:#fff; padding:12px 20px; border-radius:24px; font-size:14px; transition:opacity .2s,transform .2s; max-width:calc(100% - 32px); text-align:center; }
+.toast.show{ opacity:1; transform:translate(-50%,0); }
+.demo-bar{ display:flex; align-items:center; flex-wrap:wrap; gap:10px; padding:10px 14px; border:1px dashed #E0C060; border-radius:var(--r-md); background:var(--yellow-50); font-size:13.5px; }
+.demo-bar b{ color:#7A5A00; }
+.app-list>*+*{ margin-top:10px; }
+#content>*+*{ margin-top:20px; }
+.app-card[aria-current="true"]{ border-color:var(--orange-500); box-shadow:0 0 0 3px rgba(238,139,19,.15); }
+.card.warn{ background:var(--yellow-50); border-color:#F3DE9C; }
+.b-orange{ background:var(--orange-50); color:var(--orange-700); }
+
 /* ---------------- Responsive ---------------- */
 @media (max-width:1100px){
   .topbar-inner{ padding:0 20px; gap:20px; }
@@ -315,7 +331,7 @@ details.more>div{ padding-bottom:18px; }
 @media (max-width:760px){
   .nav{ display:none; }
   .hamburger{ display:inline-flex; align-items:center; justify-content:center; }
-  .user-chip .nm{ display:none; }
+  .user-chip .nm,.btn-logout{ display:none; }
   .user-chip{ padding:4px; }
   .mobile-nav.open{ display:block; position:sticky; top:var(--header-h); z-index:99; background:#fff; box-shadow:var(--shadow-2); }
   .mobile-nav a{ display:block; padding:14px 20px; border-bottom:1px solid var(--line); font-weight:600; text-decoration:none; }

@@ -12,7 +12,7 @@
 <div id="header"></div>
 
 <main id="main">
-  <div class="narrow page stack">
+  <form class="narrow page stack" id="form" novalidate>
     <div>
       <h1 class="page-title">สมัครเรียน</h1>
       <div class="apply-for" id="applyFor"></div>
@@ -30,31 +30,31 @@
         <p class="hint">ใช้ข้อมูลตามบัตรประชาชน · ช่องที่มี * ต้องกรอก</p>
       </div>
       <div class="avatar-pick">
-        <span class="ph" aria-hidden="true"></span>
+        <img class="ph" id="avatar" src="assets/icons/avatar.jpg" alt="รูปโปรไฟล์" style="object-fit:cover;border-style:solid;">
         <div>
-          <label class="btn btn-outline btn-sm">เปลี่ยนรูป<input type="file" accept="image/*" hidden></label>
+          <label class="btn btn-outline btn-sm">เปลี่ยนรูป<input type="file" id="photo" accept="image/*" hidden></label>
           <p class="hint small" style="margin-top:6px;">รูปหน้าตรง พื้นหลังสีเรียบ ไม่เกิน 10 MB</p>
         </div>
       </div>
       <div class="fields">
-        <div class="field full"><label for="a">เลขบัตรประชาชน <span class="req">*</span></label><input id="a" value="1 2599 00123 45 6" inputmode="numeric"></div>
-        <div class="field"><label for="b">คำนำหน้า <span class="req">*</span></label><select id="b"><option>นาย</option><option>นางสาว</option><option>นาง</option></select></div>
-        <div class="field"><label for="c">วันเกิด <span class="req">*</span></label><input id="c" value="05/05/2551"></div>
-        <div class="field"><label for="d">ชื่อ <span class="req">*</span></label><input id="d" value="สมชาย"></div>
-        <div class="field"><label for="e">นามสกุล <span class="req">*</span></label><input id="e" value="ใจดี"></div>
-        <div class="field"><label for="f">ชื่อ (ภาษาอังกฤษ) <span class="req">*</span></label><input id="f" value="Somchai"></div>
-        <div class="field"><label for="g">นามสกุล (ภาษาอังกฤษ) <span class="req">*</span></label><input id="g" value="Jaidee"></div>
-        <div class="field"><label for="h">เพศ <span class="opt">(ไม่บังคับ)</span></label><select id="h"><option>ชาย</option><option>หญิง</option><option>ไม่ระบุ</option></select></div>
-        <div class="field"><label for="i">ความต้องการพิเศษ <span class="opt">(ไม่บังคับ)</span></label><select id="i"><option>ไม่มี</option><option>มี</option></select></div>
+        <div class="field full"><label for="a">เลขบัตรประชาชน <span class="req">*</span></label><input id="a" data-k="idcard" inputmode="numeric" required></div>
+        <div class="field"><label for="b">คำนำหน้า <span class="req">*</span></label><select id="b" data-k="title" required><option>นาย</option><option>นางสาว</option><option>นาง</option></select></div>
+        <div class="field"><label for="c">วันเกิด <span class="req">*</span></label><input id="c" data-k="dob" placeholder="วว/ดด/ปปปป" required></div>
+        <div class="field"><label for="d">ชื่อ <span class="req">*</span></label><input id="d" data-k="fname" required></div>
+        <div class="field"><label for="e">นามสกุล <span class="req">*</span></label><input id="e" data-k="lname" required></div>
+        <div class="field"><label for="f">ชื่อ (ภาษาอังกฤษ) <span class="req">*</span></label><input id="f" data-k="fname_en" required></div>
+        <div class="field"><label for="g">นามสกุล (ภาษาอังกฤษ) <span class="req">*</span></label><input id="g" data-k="lname_en" required></div>
+        <div class="field"><label for="h">เพศ <span class="opt">(ไม่บังคับ)</span></label><select id="h" data-k="gender"><option>ชาย</option><option>หญิง</option><option>ไม่ระบุ</option></select></div>
+        <div class="field"><label for="i">ความต้องการพิเศษ <span class="opt">(ไม่บังคับ)</span></label><select id="i" data-k="special"><option>ไม่มี</option><option>มี</option></select></div>
       </div>
     </section>
-  </div>
+  </form>
 
   <div class="form-bar">
     <div class="narrow">
-      <a class="btn btn-outline" href="major.html">← กลับไปหน้าหลักสูตร</a>
+      <a class="btn btn-outline" id="backBtn" href="major.html">← กลับไปหน้าหลักสูตร</a>
       <span class="spacer"></span>
-      <a class="btn btn-primary btn-lg" href="profile-2.html">ถัดไป: ช่องทางติดต่อ →</a>
+      <button class="btn btn-primary btn-lg" type="submit" form="form">ถัดไป: ช่องทางติดต่อ →</button>
     </div>
   </div>
 </main>
@@ -62,5 +62,21 @@
 <div id="footer"></div>
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
+<script>
+  const form = document.getElementById("form");
+  fillForm(form);
+  document.getElementById("backBtn").href = "major.html?code=" + chosenProgram().code;
+  document.getElementById("photo").addEventListener("change", e => {
+    const f = e.target.files[0]; if(!f) return;
+    document.getElementById("avatar").src = URL.createObjectURL(f);
+    toast("เปลี่ยนรูปโปรไฟล์แล้ว");
+  });
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if(!checkRequired(form)) return;
+    Store.saveProfile(readForm(form));
+    location.href = "profile-2.html";
+  });
+</script>
 </body>
 </html>

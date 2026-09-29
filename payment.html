@@ -21,7 +21,7 @@
 
     <div class="callout ok">
       <span class="ic">✓</span>
-      <div><b>บันทึกใบสมัครแล้ว เลขที่ 2570-TM-00123</b>ชำระค่าสมัครภายในวันที่ 2 ธ.ค. 2569 เพื่อให้ใบสมัครสมบูรณ์</div>
+      <div><b>บันทึกใบสมัครแล้ว เลขที่ <span class="appid">2570-TM-00123</span></b>ชำระค่าสมัครภายในวันที่ 2 ธ.ค. 2569 เพื่อให้ใบสมัครสมบูรณ์</div>
     </div>
 
     <section class="card" style="text-align:center;">
@@ -32,7 +32,7 @@
       <div class="qr" role="img" aria-label="QR Code ตัวอย่าง">QR Code</div>
       <div class="pay-amount">400.00 บาท</div>
       <dl class="summary" style="max-width:420px;margin-left:auto;margin-right:auto;text-align:left;">
-        <dt>เลขที่ใบสมัคร</dt><dd>2570-TM-00123</dd>
+        <dt>เลขที่ใบสมัคร</dt><dd><span class="appid">2570-TM-00123</span></dd>
         <dt>Ref.</dt><dd>2570012300</dd>
         <dt>ชำระภายใน</dt><dd>2 ธ.ค. 2569 เวลา 23:59 น.</dd>
       </dl>
@@ -40,7 +40,7 @@
     </section>
 
     <div class="row" style="justify-content:center;">
-      <a class="btn btn-outline" href="status.html">ชำระภายหลัง</a>
+      <a class="btn btn-outline" id="laterBtn" href="status.html">ชำระภายหลัง</a>
       <button class="btn btn-primary btn-lg" type="button" id="paid">ชำระเงินแล้ว (จำลอง)</button>
     </div>
   </div>
@@ -51,8 +51,8 @@
   <div class="modal-card">
     <div class="big-check">✓</div>
     <h3 id="doneTitle">สมัครเรียบร้อย</h3>
-    <p>ได้รับค่าสมัครแล้ว ใบสมัครเลขที่ 2570-TM-00123 อยู่ระหว่างตรวจสอบคุณสมบัติ เราจะแจ้งผลทางอีเมลและในหน้า "ใบสมัครของฉัน"</p>
-    <a class="btn btn-primary btn-lg btn-block" href="status.html">ไปที่ใบสมัครของฉัน</a>
+    <p>ได้รับค่าสมัครแล้ว ใบสมัครเลขที่ <span class="appid">2570-TM-00123</span> อยู่ระหว่างตรวจสอบคุณสมบัติ เราจะแจ้งผลทางอีเมลและในหน้า "ใบสมัครของฉัน"</p>
+    <a class="btn btn-primary btn-lg btn-block" id="goStatus" href="status.html">ไปที่ใบสมัครของฉัน</a>
   </div>
 </div>
 
@@ -61,7 +61,15 @@
 <script src="js/mock.js"></script>
 <script>
   const modal = document.getElementById("done");
+  /* the application being paid for (from review.html) */
+  const app = Store.app(qs("id")) || Store.apps[0];
+  if(!app) location.replace("status.html");
+  else {
+    document.querySelectorAll(".appid").forEach(s => s.textContent = app.id);
+    document.getElementById("laterBtn").href = document.getElementById("goStatus").href = "status.html?id=" + app.id;
+  }
   document.getElementById("paid").addEventListener("click", () => {
+    if(app) Store.setStatus(app.id, "review");
     modal.classList.add("open");
     modal.querySelector("a").focus();
   });

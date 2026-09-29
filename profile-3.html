@@ -12,7 +12,7 @@
 <div id="header"></div>
 
 <main id="main">
-  <div class="narrow page stack">
+  <form class="narrow page stack" id="form" novalidate>
     <div>
       <h1 class="page-title">สมัครเรียน</h1>
       <div class="apply-for" id="applyFor"></div>
@@ -27,38 +27,38 @@
       <div class="field">
         <span class="label">สถานะ <span class="req">*</span></span>
         <div class="radios">
-          <label class="radio"><input type="radio" name="st" checked> กำลังศึกษาอยู่</label>
-          <label class="radio"><input type="radio" name="st"> จบการศึกษาแล้ว</label>
+          <label class="radio"><input type="radio" name="st" data-k="e_state" value="กำลังศึกษาอยู่"> กำลังศึกษาอยู่</label>
+          <label class="radio"><input type="radio" name="st" data-k="e_state" value="จบการศึกษาแล้ว"> จบการศึกษาแล้ว</label>
         </div>
       </div>
       <div class="fields">
-        <div class="field"><label for="a">ระดับการศึกษา <span class="req">*</span></label><select id="a"><option>มัธยมศึกษาปีที่ 6 (สายวิทย์-คณิต)</option><option>มัธยมศึกษาปีที่ 6 (สายศิลป์)</option><option>ประกาศนียบัตรวิชาชีพ (ปวช.)</option><option>ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</option></select></div>
-        <div class="field"><label for="b">แผนการเรียน / สาขา <span class="req">*</span></label><input id="b" value="วิทย์-คณิต"></div>
-        <div class="field full"><label for="c">ชื่อสถานศึกษา <span class="req">*</span></label><input id="c" value="โรงเรียนปราจีนกัลยาณี"></div>
-        <div class="field"><label for="d">เกรดเฉลี่ยสะสม (GPAX) <span class="req">*</span></label><input id="d" value="3.45" inputmode="decimal"><p class="help">ถ้ายังเรียนอยู่ ใช้เกรดเฉลี่ยถึงภาคเรียนล่าสุด</p></div>
-        <div class="field"><label for="e">ปีที่จบ / คาดว่าจะจบ</label><select id="e"><option>2569</option><option>2570</option></select></div>
+        <div class="field"><label for="a">ระดับการศึกษา <span class="req">*</span></label><select id="a" data-k="e_level" required><option>มัธยมศึกษาปีที่ 6 (สายวิทย์-คณิต)</option><option>มัธยมศึกษาปีที่ 6 (สายศิลป์)</option><option>ประกาศนียบัตรวิชาชีพ (ปวช.)</option><option>ประกาศนียบัตรวิชาชีพชั้นสูง (ปวส.)</option></select></div>
+        <div class="field"><label for="b">แผนการเรียน / สาขา <span class="req">*</span></label><input id="b" data-k="e_plan" required></div>
+        <div class="field full"><label for="c">ชื่อสถานศึกษา <span class="req">*</span></label><input id="c" data-k="e_school" required></div>
+        <div class="field"><label for="d">เกรดเฉลี่ยสะสม (GPAX) <span class="req">*</span></label><input id="d" data-k="gpax" inputmode="decimal" required><p class="help">ถ้ายังเรียนอยู่ ใช้เกรดเฉลี่ยถึงภาคเรียนล่าสุด</p></div>
+        <div class="field"><label for="e">ปีที่จบ / คาดว่าจะจบ</label><select id="e" data-k="grad"><option>2569</option><option>2570</option></select></div>
       </div>
     </section>
 
     <details class="more">
       <summary>คะแนนสอบภาษาอังกฤษ <span class="opt">(ถ้ามี)</span></summary>
       <div class="fields">
-        <div class="field"><label for="f">ประเภทการสอบ</label><select id="f"><option>ไม่มี</option><option>TOEIC</option><option>IELTS</option><option>TOEFL</option></select></div>
-        <div class="field"><label for="g">คะแนน</label><input id="g"></div>
+        <div class="field"><label for="f">ประเภทการสอบ</label><select id="f" data-k="l_type"><option>ไม่มี</option><option>TOEIC</option><option>IELTS</option><option>TOEFL</option></select></div>
+        <div class="field"><label for="g">คะแนน</label><input id="g" data-k="l_score"></div>
       </div>
     </details>
     <details class="more">
       <summary>ความสามารถพิเศษ / ผลงาน <span class="opt">(ถ้ามี)</span></summary>
-      <div class="field"><label for="h">รายละเอียด</label><textarea id="h" placeholder="เช่น รางวัลการแข่งขันหุ่นยนต์ระดับจังหวัด"></textarea></div>
+      <div class="field"><label for="h">รายละเอียด</label><textarea id="h" data-k="talent" placeholder="เช่น รางวัลการแข่งขันหุ่นยนต์ระดับจังหวัด"></textarea></div>
     </details>
-  </div>
+  </form>
 
   <div class="form-bar">
     <div class="narrow">
       <a class="btn btn-outline" href="profile-2.html">← ย้อนกลับ</a>
       <span class="saved">บันทึกอัตโนมัติแล้ว</span>
       <span class="spacer"></span>
-      <a class="btn btn-primary btn-lg" href="apply.html">ถัดไป: รอบและเอกสาร →</a>
+      <button class="btn btn-primary btn-lg" type="submit" form="form">ถัดไป: รอบและเอกสาร →</button>
     </div>
   </div>
 </main>
@@ -66,5 +66,17 @@
 <div id="footer"></div>
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
+<script>
+  const form = document.getElementById("form");
+  fillForm(form);
+  form.addEventListener("input", () => Store.saveProfile(readForm(form)));
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if(!checkRequired(form)) return;
+    /* profile complete: next applications skip steps 1-3 */
+    Store.saveProfile(Object.assign(readForm(form), { done:true }));
+    location.href = "apply.html";
+  });
+</script>
 </body>
 </html>

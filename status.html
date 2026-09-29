@@ -15,86 +15,86 @@
   <div class="head-row" style="margin:0;align-items:flex-end;">
     <div>
       <h1 class="page-title">ใบสมัครของฉัน</h1>
-      <p class="muted">นายสมชาย ใจดี · somchai@example.com</p>
+      <p class="muted" id="who"></p>
     </div>
     <a class="btn btn-outline" href="programs.html">สมัครหลักสูตรอื่นเพิ่ม</a>
   </div>
-
-  <!-- like the Figma prototype, clicking the card flips between the two sample states (screens 12 and 13) -->
-  <a class="app-card" id="appCard" href="#" title="ดูตัวอย่างสถานะถัดไป">
-    <span class="code" id="code"></span>
-    <div>
-      <h2 id="progName"></h2>
-      <p class="meta">รอบ 1 Portfolio · เลขที่ใบสมัคร 2570-TM-00123 · สมัครเมื่อ 28 พ.ย. 2569</p>
-      <span class="badge" id="badge"></span>
-    </div>
-  </a>
-
-  <div id="action"></div>
-
-  <section class="card">
-    <h2 class="card-title">ขั้นตอนการคัดเลือก</h2>
-    <ol class="timeline" id="timeline"></ol>
-  </section>
+  <div id="content"></div>
 </main>
 
 <div id="footer"></div>
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
 <script>
-  const p = chosenProgram();
-  document.getElementById("code").textContent = p.code;
-  document.getElementById("progName").textContent = p.nameTh;
+  const f = Store.profile, u = Store.user;
+  document.getElementById("who").textContent = (f.done ? fullName(f) : u ? u.name : "") + " · " + (u ? u.email : "");
 
   const STEPS = [
-    ["ส่งใบสมัคร", "28 พ.ย. 2569"],
-    ["ชำระค่าสมัคร", "ภายใน 2 ธ.ค. 2569"],
-    ["ตรวจสอบคุณสมบัติ", "ประมาณ 3-5 วันทำการ"],
-    ["สอบสัมภาษณ์", "ตามประกาศรายชื่อผู้มีสิทธิ์สอบ"],
-    ["ประกาศผลการคัดเลือก", "ตามกำหนดการรับสมัคร"],
-    ["ยืนยันสิทธิ์ที่ mytcas.com", "ภายในวันที่ระบบกลางกำหนด"],
-    ["รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่", "ชำระค่าธรรมเนียมแรกเข้า"]
+    ["ส่งใบสมัคร", ""], ["ชำระค่าสมัคร", "ภายใน 2 ธ.ค. 2569"], ["ตรวจสอบคุณสมบัติ", "ประมาณ 3-5 วันทำการ"],
+    ["สอบสัมภาษณ์", "ตามประกาศรายชื่อผู้มีสิทธิ์สอบ"], ["ประกาศผลการคัดเลือก", "ตามกำหนดการรับสมัคร"],
+    ["ยืนยันสิทธิ์ที่ mytcas.com", "ภายในวันที่ระบบกลางกำหนด"], ["รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่", "ชำระค่าธรรมเนียมแรกเข้า"]
   ];
-
-  const STATES = {
-    review: {
-      at: 2, label: "กำลังตรวจสอบคุณสมบัติ", badge: "b-blue",
-      action: `<div class="callout info"><span class="ic">i</span>
-        <div><b>ได้รับค่าสมัครแล้ว</b>ทางคณะกำลังตรวจสอบคุณสมบัติและเอกสาร ยังไม่ต้องทำอะไรเพิ่ม เราจะแจ้งทางอีเมลเมื่อมีความคืบหน้า</div></div>`
-    },
-    passed: {
-      at: 5, label: "ผ่านการคัดเลือก", badge: "b-green",
-      action: `<section class="card passed">
-        <h2 class="card-title">ยินดีด้วย คุณผ่านการคัดเลือก</h2>
+  /* what each status means for the applicant; "at" = current step in the timeline */
+  const STATUS = {
+    unpaid:    { at:1, label:"รอชำระค่าสมัคร", badge:"b-orange", demo:"รอชำระเงิน",
+      action: a => `<section class="card warn"><h2 class="card-title">ยังไม่ได้ชำระค่าสมัคร</h2>
+        <p class="hint">ใบสมัครจะยังไม่ถูกตรวจสอบจนกว่าจะชำระเงิน · ชำระภายใน 2 ธ.ค. 2569</p>
+        <a class="btn btn-primary btn-lg" href="payment.html?id=${a.id}">ชำระค่าสมัคร 400 บาท</a></section>` },
+    review:    { at:2, label:"กำลังตรวจสอบคุณสมบัติ", badge:"b-blue", demo:"ตรวจคุณสมบัติ",
+      action: () => `<div class="callout info"><span class="ic">i</span><div><b>ได้รับค่าสมัครแล้ว</b>ทางคณะกำลังตรวจสอบคุณสมบัติและเอกสาร ยังไม่ต้องทำอะไรเพิ่ม เราจะแจ้งทางอีเมลเมื่อมีความคืบหน้า</div></div>` },
+    interview: { at:3, label:"มีสิทธิ์สอบสัมภาษณ์", badge:"b-navy", demo:"มีสิทธิ์สัมภาษณ์",
+      action: () => `<section class="card"><h2 class="card-title">นัดสอบสัมภาษณ์</h2>
+        <dl class="summary"><dt>วันที่</dt><dd>12 ธ.ค. 2569 เวลา 09:00 น.</dd>
+        <dt>สถานที่</dt><dd>อาคาร 3 คณะเทคโนโลยีและการจัดการอุตสาหกรรม มจพ. ปราจีนบุรี</dd>
+        <dt>เตรียมตัว</dt><dd>บัตรประชาชน, Portfolio ฉบับจริง, แต่งกายชุดนักเรียน</dd></dl>
+        <a class="btn btn-outline" href="contact.html">ดูแผนที่การเดินทาง</a></section>` },
+    passed:    { at:5, label:"ผ่านการคัดเลือก", badge:"b-green", demo:"ผ่านการคัดเลือก",
+      action: () => `<section class="card passed"><h2 class="card-title">ยินดีด้วย คุณผ่านการคัดเลือก</h2>
         <p class="hint">ขั้นตอนต่อไปมี 2 อย่าง ทำตามลำดับ:</p>
-        <ol class="next-steps">
-          <li><b>ยืนยันสิทธิ์ที่ระบบกลาง mytcas.com</b><span>ถ้าไม่ยืนยันภายในกำหนด จะถือว่าสละสิทธิ์</span></li>
-          <li><b>รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่</b><span>เปิดให้ทำหลังยืนยันสิทธิ์แล้ว</span></li>
-        </ol>
-        <a class="btn btn-green btn-lg" href="https://student.mytcas.com" target="_blank" rel="noopener">ไปยืนยันสิทธิ์ที่ mytcas.com</a>
-      </section>`
-    }
+        <ol class="next-steps"><li><b>ยืนยันสิทธิ์ที่ระบบกลาง mytcas.com</b><span>ถ้าไม่ยืนยันภายในกำหนด จะถือว่าสละสิทธิ์</span></li>
+        <li><b>รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่</b><span>เปิดให้ทำหลังยืนยันสิทธิ์แล้ว</span></li></ol>
+        <a class="btn btn-green btn-lg" href="https://student.mytcas.com" target="_blank" rel="noopener">ไปยืนยันสิทธิ์ที่ mytcas.com</a></section>` },
+    confirmed: { at:6, label:"ยืนยันสิทธิ์แล้ว", badge:"b-green", demo:"ยืนยันสิทธิ์แล้ว",
+      action: a => `<section class="card"><h2 class="card-title">รายงานตัวและขึ้นทะเบียนนักศึกษาใหม่</h2>
+        <p class="hint">ยืนยันสิทธิ์เรียบร้อยแล้ว ขั้นสุดท้ายคือรายงานตัวและชำระค่าธรรมเนียมแรกเข้า</p>
+        <dl class="summary"><dt>ค่าธรรมเนียม</dt><dd>${programByCode(a.code).tuition} บาท (ภาคการศึกษาแรก)</dd><dt>ภายใน</dt><dd>ตามประกาศของมหาวิทยาลัย</dd></dl>
+        <button class="btn btn-primary btn-lg" type="button" onclick="toast('ม็อกอัพ: ไปหน้าระบบขึ้นทะเบียนนักศึกษาใหม่')">รายงานตัวและขึ้นทะเบียน</button></section>` }
   };
 
-  let state = qs("s") === "passed" ? "passed" : "review";
   function render(){
-    const s = STATES[state];
-    const badge = document.getElementById("badge");
-    badge.className = "badge " + s.badge;
-    badge.textContent = s.label;
-    document.getElementById("action").innerHTML = s.action;
-    document.getElementById("timeline").innerHTML = STEPS.map(([name, when], i) => {
+    const apps = Store.apps;
+    const box = document.getElementById("content");
+    if(!apps.length){
+      box.innerHTML = `<div class="empty card"><p>ยังไม่มีใบสมัคร</p>
+        <a class="btn btn-primary" href="programs.html" style="margin-top:12px;">เลือกหลักสูตรที่จะสมัคร</a></div>`;
+      return;
+    }
+    const cur = Store.app(qs("id")) || apps[0];
+    const s = STATUS[cur.status];
+    const list = apps.map(a => {
+      const p = programByCode(a.code), st = STATUS[a.status];
+      return `<a class="app-card" href="status.html?id=${a.id}" ${a.id === cur.id ? 'aria-current="true"' : ""}>
+        <span class="code">${a.code}</span>
+        <div><h2>${esc(p.nameTh)}</h2>
+          <p class="meta">${esc(a.round)} · เลขที่ใบสมัคร ${a.id} · สมัครเมื่อ ${esc(a.submittedAt)}</p>
+          <span class="badge ${st.badge}">${st.label}</span></div></a>`;
+    }).join("");
+    const timeline = STEPS.map(([name, when], i) => {
       const cls = i < s.at ? "done" : i === s.at ? "active" : "pending";
       return `<li class="${cls}"><span class="tdot">${i < s.at ? "✓" : i + 1}</span>
-        <div class="tbox"><div class="tname">${name}</div><div class="tdate">${i < s.at ? "เรียบร้อย" : when}</div></div></li>`;
+        <div class="tbox"><div class="tname">${name}</div><div class="tdate">${i < s.at ? "เรียบร้อย" : (i === 0 ? cur.submittedAt : when)}</div></div></li>`;
     }).join("");
-    history.replaceState(null, "", "status.html" + (state === "passed" ? "?s=passed" : ""));
+    box.innerHTML = `
+      <div class="app-list">${list}</div>
+      <div class="demo-bar" role="group" aria-label="ตัวอย่างสถานะ">
+        <b>จำลองสถานะ${apps.length > 1 ? " " + cur.code : ""} (สำหรับนำเสนอ):</b>
+        <div class="chips">${Object.entries(STATUS).map(([k, v]) =>
+          `<button class="chip" type="button" data-s="${k}" aria-pressed="${k === cur.status}">${v.demo}</button>`).join("")}</div>
+      </div>
+      ${s.action(cur)}
+      <section class="card"><h2 class="card-title">ขั้นตอนการคัดเลือก</h2><ol class="timeline">${timeline}</ol></section>`;
+    box.querySelectorAll("[data-s]").forEach(b => b.addEventListener("click", () => { Store.setStatus(cur.id, b.dataset.s); render(); }));
   }
-  document.getElementById("appCard").addEventListener("click", e => {
-    e.preventDefault();
-    state = state === "review" ? "passed" : "review";
-    render();
-  });
   render();
 </script>
 </body>

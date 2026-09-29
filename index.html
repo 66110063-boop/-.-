@@ -20,7 +20,7 @@
       <p>มหาวิทยาลัยเทคโนโลยีพระจอมเกล้าพระนครเหนือ วิทยาเขตปราจีนบุรี · เปิดรับ 12 หลักสูตร ทั้งปริญญาตรี ต่อเนื่อง และเทียบโอน</p>
       <div class="row">
         <a class="btn btn-primary btn-lg" href="programs.html">เลือกหลักสูตรที่จะสมัคร</a>
-        <a class="btn btn-ondark btn-lg" href="login.html">ติดตามใบสมัคร</a>
+        <a class="btn btn-ondark btn-lg" id="trackBtn" href="login.html?next=status.html">ติดตามใบสมัคร</a>
       </div>
     </div>
   </section>
@@ -63,7 +63,9 @@
 <script src="js/mock.js"></script>
 <script>
   document.getElementById("featured").innerHTML =
-    ["INE","IT","CA","IEM"].map(c => programCard(PROGRAMS.find(p => p.code === c))).join("");
+    ["INE","IT","CA","IEM"].map(c => programCard(programByCode(c))).join("");
+  /* already signed in: go straight to my applications */
+  if(Store.user) document.getElementById("trackBtn").href = "status.html";
 </script>
 </body>
 </html>

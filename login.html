@@ -45,13 +45,33 @@
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
 <script>
-  /* Same as the Figma prototype (screen 04): every sign-in button goes to
-     screen 05 "ข้อมูลส่วนตัว", the first time the applicant fills in the profile. */
-  const dest = "profile-1.html";
-  document.getElementById("lead").textContent =
+  /* Where to go after signing in:
+     - from "สมัครหลักสูตรนี้" (next=apply): profile step 1 the first time, otherwise round & documents
+     - from a page that needed sign-in (next=page.html): back to that page
+     - otherwise: first-time applicants fill the profile (Figma 04 → 05), returning ones see their applications */
+  const next = qs("next");
+  const code = qs("code");
+  if(code && programByCode(code)) Store.saveDraft({ code: code.toUpperCase() });
+  if(next === "apply") document.getElementById("lead").textContent =
     "เข้าสู่ระบบเพื่อสมัคร " + chosenProgram().code + " · ครั้งแรกจะให้กรอกข้อมูลผู้สมัครก่อน";
-  document.getElementById("form").addEventListener("submit", e => { e.preventDefault(); location.href = dest; });
-  document.querySelectorAll("[data-go]").forEach(a => a.href = dest);
+
+  function signInAs(email){
+    Store.signIn(email);
+    const done = Store.profile.done;
+    let dest;
+    if(next === "apply") dest = done ? "apply.html" : "profile-1.html";
+    else if(next && /^[\w-]+\.html/.test(next)) dest = next;
+    else dest = done ? "status.html" : "profile-1.html";
+    location.href = dest;
+  }
+  document.getElementById("form").addEventListener("submit", e => {
+    e.preventDefault();
+    signInAs(document.getElementById("email").value.trim() || "somchai@example.com");
+  });
+  document.querySelectorAll("[data-go]").forEach(a => a.addEventListener("click", e => {
+    e.preventDefault();
+    signInAs(a.textContent.trim() === "Google" ? "somchai@gmail.com" : "somchai@thaid.go.th");
+  }));
 </script>
 </body>
 </html>

@@ -12,7 +12,7 @@
 <div id="header"></div>
 
 <main id="main">
-  <div class="narrow page stack">
+  <form class="narrow page stack" id="form" novalidate>
     <div>
       <h1 class="page-title">สมัครเรียน</h1>
       <div class="apply-for" id="applyFor"></div>
@@ -25,11 +25,11 @@
         <p class="hint">เราจะแจ้งผลการสมัครทางอีเมลและเบอร์โทรนี้</p>
       </div>
       <div class="fields">
-        <div class="field"><label for="a">อีเมล <span class="req">*</span></label><input id="a" type="email" value="somchai@example.com"></div>
-        <div class="field"><label for="b">เบอร์มือถือ <span class="req">*</span></label><input id="b" type="tel" value="081-234-5678"></div>
-        <div class="field full"><label for="c">ที่อยู่ปัจจุบัน <span class="req">*</span></label><textarea id="c">99 หมู่ 1 ถนนสุวรรณศร</textarea></div>
-        <div class="field"><label for="d">จังหวัด <span class="req">*</span></label><input id="d" value="ปราจีนบุรี"></div>
-        <div class="field"><label for="e">รหัสไปรษณีย์ <span class="req">*</span></label><input id="e" value="25000" inputmode="numeric"></div>
+        <div class="field"><label for="a">อีเมล <span class="req">*</span></label><input id="a" type="email" data-k="email" required></div>
+        <div class="field"><label for="b">เบอร์มือถือ <span class="req">*</span></label><input id="b" type="tel" data-k="phone" required></div>
+        <div class="field full"><label for="c">ที่อยู่ปัจจุบัน <span class="req">*</span></label><textarea id="c" data-k="address" required></textarea></div>
+        <div class="field"><label for="d">จังหวัด <span class="req">*</span></label><input id="d" data-k="province" required></div>
+        <div class="field"><label for="e">รหัสไปรษณีย์ <span class="req">*</span></label><input id="e" data-k="zip" inputmode="numeric" required></div>
       </div>
     </section>
 
@@ -41,35 +41,35 @@
       <div class="field">
         <span class="label">ความสัมพันธ์ <span class="req">*</span></span>
         <div class="radios">
-          <label class="radio"><input type="radio" name="rel"> บิดา</label>
-          <label class="radio"><input type="radio" name="rel" checked> มารดา</label>
-          <label class="radio"><input type="radio" name="rel"> อื่น ๆ</label>
+          <label class="radio"><input type="radio" name="rel" data-k="g_rel" value="บิดา"> บิดา</label>
+          <label class="radio"><input type="radio" name="rel" data-k="g_rel" value="มารดา"> มารดา</label>
+          <label class="radio"><input type="radio" name="rel" data-k="g_rel" value="อื่น ๆ"> อื่น ๆ</label>
         </div>
       </div>
       <div class="fields">
-        <div class="field"><label for="f">ชื่อ-นามสกุล <span class="req">*</span></label><input id="f" value="นางสมศรี ใจดี"></div>
-        <div class="field"><label for="g">เบอร์มือถือ <span class="req">*</span></label><input id="g" type="tel" value="089-876-5432"></div>
+        <div class="field"><label for="f">ชื่อ-นามสกุล <span class="req">*</span></label><input id="f" data-k="g_name" required></div>
+        <div class="field"><label for="g">เบอร์มือถือ <span class="req">*</span></label><input id="g" type="tel" data-k="g_phone" required></div>
       </div>
-      <label class="check"><input type="checkbox" checked> ที่อยู่เดียวกับผู้สมัคร</label>
+      <label class="check"><input type="checkbox" data-k="g_same"> ที่อยู่เดียวกับผู้สมัคร</label>
     </section>
 
     <details class="more">
       <summary>ข้อมูลบิดา-มารดาเพิ่มเติม <span class="opt">(ไม่บังคับ)</span></summary>
       <div class="fields">
-        <div class="field"><label for="h">ชื่อ-นามสกุล บิดา</label><input id="h"></div>
-        <div class="field"><label for="i">เบอร์โทร บิดา</label><input id="i" type="tel"></div>
-        <div class="field"><label for="j">ชื่อ-นามสกุล มารดา</label><input id="j"></div>
-        <div class="field"><label for="k">เบอร์โทร มารดา</label><input id="k" type="tel"></div>
+        <div class="field"><label for="h">ชื่อ-นามสกุล บิดา</label><input id="h" data-k="f_name"></div>
+        <div class="field"><label for="i">เบอร์โทร บิดา</label><input id="i" type="tel" data-k="f_phone"></div>
+        <div class="field"><label for="j">ชื่อ-นามสกุล มารดา</label><input id="j" data-k="m_name"></div>
+        <div class="field"><label for="k">เบอร์โทร มารดา</label><input id="k" type="tel" data-k="m_phone"></div>
       </div>
     </details>
-  </div>
+  </form>
 
   <div class="form-bar">
     <div class="narrow">
       <a class="btn btn-outline" href="profile-1.html">← ย้อนกลับ</a>
       <span class="saved">บันทึกอัตโนมัติแล้ว</span>
       <span class="spacer"></span>
-      <a class="btn btn-primary btn-lg" href="profile-3.html">ถัดไป: การศึกษา →</a>
+      <button class="btn btn-primary btn-lg" type="submit" form="form">ถัดไป: การศึกษา →</button>
     </div>
   </div>
 </main>
@@ -77,5 +77,16 @@
 <div id="footer"></div>
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
+<script>
+  const form = document.getElementById("form");
+  fillForm(form);
+  form.addEventListener("input", () => Store.saveProfile(readForm(form)));
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+    if(!checkRequired(form)) return;
+    Store.saveProfile(readForm(form));
+    location.href = "profile-3.html";
+  });
+</script>
 </body>
 </html>

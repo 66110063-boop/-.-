@@ -23,21 +23,14 @@
       <div class="head-row" style="margin:0;"><h2 class="card-title">หลักสูตรที่สมัคร</h2><a class="btn btn-ghost btn-sm" href="apply.html">แก้ไข</a></div>
       <dl class="summary">
         <dt>หลักสูตร</dt><dd id="prog"></dd>
-        <dt>รอบ</dt><dd>รอบ 1 Portfolio</dd>
+        <dt>รอบ</dt><dd id="round"></dd>
         <dt>เอกสาร</dt><dd>4/4 ไฟล์ · ครบ</dd>
       </dl>
     </section>
 
     <section class="card">
       <div class="head-row" style="margin:0;"><h2 class="card-title">ข้อมูลผู้สมัคร</h2><a class="btn btn-ghost btn-sm" href="profile-1.html">แก้ไข</a></div>
-      <dl class="summary">
-        <dt>ชื่อ-นามสกุล</dt><dd>นายสมชาย ใจดี (Somchai Jaidee)</dd>
-        <dt>เลขบัตรประชาชน</dt><dd>1 2599 00123 45 6</dd>
-        <dt>ติดต่อ</dt><dd>081-234-5678 · somchai@example.com</dd>
-        <dt>สถานศึกษา</dt><dd>โรงเรียนปราจีนกัลยาณี · ม.6 วิทย์-คณิต</dd>
-        <dt>GPAX</dt><dd>3.45</dd>
-        <dt>ผู้ปกครอง</dt><dd>นางสมศรี ใจดี (มารดา) · 089-876-5432</dd>
-      </dl>
+      <dl class="summary" id="who"></dl>
     </section>
 
     <section class="card">
@@ -50,7 +43,7 @@
     </section>
 
     <section class="card">
-      <label class="check"><input type="checkbox" checked> ข้าพเจ้าตรวจสอบแล้วว่าข้อมูลและเอกสารถูกต้องตามความจริง และยอมรับระเบียบการรับสมัคร</label>
+      <label class="check"><input type="checkbox" id="agree" required> ข้าพเจ้าตรวจสอบแล้วว่าข้อมูลและเอกสารถูกต้องตามความจริง และยอมรับระเบียบการรับสมัคร</label>
     </section>
   </div>
 
@@ -58,7 +51,7 @@
     <div class="narrow">
       <a class="btn btn-outline" href="apply.html">← ย้อนกลับ</a>
       <span class="spacer"></span>
-      <a class="btn btn-primary btn-lg" href="payment.html">ยืนยันใบสมัครและชำระเงิน →</a>
+      <a class="btn btn-primary btn-lg" id="confirmBtn" href="payment.html">ยืนยันใบสมัครและชำระเงิน →</a>
     </div>
   </div>
 </main>
@@ -67,8 +60,23 @@
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
 <script>
-  const p = chosenProgram();
+  const p = chosenProgram(), d = Store.draft, f = Store.profile;
   document.getElementById("prog").textContent = p.code + " " + p.nameTh.replace("สาขาวิชา", "");
+  document.getElementById("round").textContent = d.round;
+  document.getElementById("who").innerHTML = [
+    ["ชื่อ-นามสกุล", fullName(f) + " (" + f.fname_en + " " + f.lname_en + ")"],
+    ["เลขบัตรประชาชน", f.idcard],
+    ["ติดต่อ", f.phone + " · " + f.email],
+    ["สถานศึกษา", f.e_school + " · " + f.e_plan],
+    ["GPAX", f.gpax],
+    ["ผู้ปกครอง", f.g_name + " (" + f.g_rel + ") · " + f.g_phone]
+  ].map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("");
+  document.getElementById("confirmBtn").addEventListener("click", e => {
+    e.preventDefault();
+    if(!checkRequired(document.querySelector("main"))) return;
+    const app = Store.submit();
+    location.href = "payment.html?id=" + app.id;
+  });
 </script>
 </body>
 </html>

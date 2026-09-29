@@ -25,7 +25,7 @@
         <p class="hint">แสดงเฉพาะรอบที่สมัครตรงกับมหาวิทยาลัย</p>
       </div>
       <div class="radios">
-        <label class="radio wide"><input type="radio" name="round" checked><span class="lbl">รอบ 1 Portfolio</span><span class="badge b-green">เปิดรับถึง 30 พ.ย. 2569</span></label>
+        <label class="radio wide"><input type="radio" name="round" value="รอบ 1 Portfolio" checked><span class="lbl">รอบ 1 Portfolio</span><span class="badge b-green">เปิดรับถึง 30 พ.ย. 2569</span></label>
         <label class="radio wide disabled"><input type="radio" name="round" disabled><span class="lbl">รอบ 2 โควตา</span><span class="badge b-gray">เปิด 1 ก.พ. 2570</span></label>
       </div>
       <div class="callout info"><span class="ic">i</span><div>รอบ 3 Admission สมัครผ่านระบบกลาง <a href="https://student.mytcas.com" target="_blank" rel="noopener">mytcas.com</a> ไม่ได้สมัครในระบบนี้</div></div>
@@ -62,9 +62,9 @@
   <div class="form-bar">
     <div class="narrow">
       <a class="btn btn-outline" href="profile-3.html">← ย้อนกลับ</a>
-      <span class="saved">แนบเอกสารครบ 4/4</span>
+      <span class="saved" id="docCount">แนบเอกสารครบ 4/4</span>
       <span class="spacer"></span>
-      <a class="btn btn-primary btn-lg" href="review.html">ถัดไป: ตรวจสอบ →</a>
+      <a class="btn btn-primary btn-lg" id="nextBtn" href="review.html">ถัดไป: ตรวจสอบ →</a>
     </div>
   </div>
 </main>
@@ -72,5 +72,26 @@
 <div id="footer"></div>
 <script src="js/data.js"></script>
 <script src="js/mock.js"></script>
+<script>
+  /* returning applicants skip steps 1-3, so "back" leads to the program page instead */
+  if(Store.profile.done && document.referrer.indexOf("profile-3.html") === -1){
+    const back = document.querySelector(".form-bar .btn-outline");
+    back.href = "major.html?code=" + chosenProgram().code;
+    back.textContent = "← กลับไปหน้าหลักสูตร";
+  }
+  const required = () => [...document.querySelectorAll(".upload")].slice(0, 4);
+  function count(){
+    const n = required().filter(b => b.classList.contains("has")).length;
+    const el = document.getElementById("docCount");
+    el.textContent = n === 4 ? "แนบเอกสารครบ 4/4" : "แนบเอกสารแล้ว " + n + "/4";
+    el.style.color = n === 4 ? "" : "var(--orange-700)";
+  }
+  document.addEventListener("docs-changed", count);
+  document.getElementById("nextBtn").addEventListener("click", e => {
+    e.preventDefault();
+    Store.saveDraft({ round: document.querySelector('input[name=round]:checked').value });
+    location.href = "review.html";
+  });
+</script>
 </body>
 </html>

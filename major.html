@@ -77,7 +77,10 @@
 <script>
   /* this page only shows the program; applying (and remembering it) happens via the button */
   const p = programByCode(qs("code")) || chosenProgram();
-  document.getElementById("applyBtn").href = "login.html?next=apply&code=" + p.code;
+  const applied = Store.user && Store.apps.find(a => a.code === p.code);
+  const btn = document.getElementById("applyBtn");
+  if(applied){ btn.textContent = "ดูใบสมัครของหลักสูตรนี้"; btn.href = "status.html?id=" + applied.id; }
+  else btn.href = applyUrl(p.code);
   document.title = p.code + " " + p.fullTitle + " | รับสมัครนักศึกษา มจพ. ปราจีนบุรี";
   document.getElementById("crumb").textContent = p.code;
   document.getElementById("code").textContent = p.code;
